@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
+<hibernate-mapping>  
+	<!-- 每个class对应一个持久化对象 -->
+	<class name="com.edu.po.Student">
+		<!-- id元素用来定义主键标示，并制定主键生成策略 -->
+		<id name="s_no">
+			<generator class="assigned"></generator>
+		</id>
+		
+		<!-- 定义其他属性 -->
+		<property name="s_name"></property>
+		<property name="s_gender"></property>
+		<property name="s_birth"></property>
+		<property name="s_address"></property>
+		<property name="s_identity"></property>
+		<property name="s_phone"></property>
+		<property name="s_intime"></property>
+		<property name="s_outtime"></property>
+		<property name="s_college"></property>
+		<property name="s_department"></property>
+		<property name="s_password"></property>
+		<property name="s_path"></property>
+		<property name="s_repassword"></property>
+	</class>
+</hibernate-mapping>  

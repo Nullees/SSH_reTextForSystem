@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+ 	
+     <package name="default" namespace="/" extends="struts-default">
+     
+     	<!-- studentlogin.action 学生登录 type="redirect"-->
+         <action name="studentlogin" class="studentLogingAction">
+        	<result name="success" >/StudentLoginSuccess.jsp</result>
+        	<result name="input">/StudentLogin.jsp</result>
+        	<result name="error">/StudentLogin.jsp</result>
+        </action>
+        
+        <!-- studentfindtargetpassword.action 学生找回密码 -->
+         <action name="studentfindtargetpassword" class="studentFindTargetAction">
+        		<result name="success" >/StudentShowTargetPassword.jsp</result>	
+        		<result name="error" >/StudentShowTargetPasswordError.jsp</result>	
+      	 </action>
+      	 
+      	<!-- studentShowAll.action 显示所有学生信息配置 -->
+        <action name="studentShowAll" class="studentShowAllAction">
+        	<result name="success">/TeacherQueryStudentRoster.jsp</result>
+        </action>
+        
+        <!-- studentFindObjectByName.action 根据学生姓名显示学生信息 -->
+        <!-- <action name="studentfindobjectbyname" class="studentFindObjectByNameAction">
+        	<result name="success">/StudentUploadFiles.jsp</result>
+        </action> -->
+        
+        <!--studentfindtargetbys_no.action 根据学生姓名显示学生信息 -->
+        <action name="studentfindobjectbyname" class="studentFindTargetByS_no">
+        	<result name="success">/StudentUploadFiles.jsp</result>
+        </action>
+        
+         <!--studentdownloadhomeworkfromteacher.action 学生下载教师所布置的作业 -->
+        <action name="studentdownloadhomeworkfromteacher" class="studentDownloadHomeworkFromTeacherAction">
+        	<result name="success">/StudentDownloadHomeworkFromTeacher.jsp</result>
+        </action>
+        
+        <!--studentquerygradebyloction.action 学生根据定位信息查询成绩 -->
+        <action name="studentquerygradebyloction" class="studentQueryGradeByLoctionAction">
+        	<result name="success">/StudentQueryGradeByLocationResult.jsp</result>
+        </action>
+        
+        <!--studentqueryofficenotice.action 学生查看教务处公告 -->
+        <action name="studentqueryofficenotice" class="studentQueryOfficeNoticeAction">
+        	<result name="success">/StudentQueryOfficeNotice.jsp</result>
+        </action>
+        
+        <!-- studentuploadfiles.action 学生上传作业文件 -->
+         <action name="studentuploadfiles" class="studentUploadFilesAction">
+            <interceptor-ref name="fileUpload"> 
+              
+                <param name="maximumSize">1024*1024</param> 
+            </interceptor-ref> 
+            <interceptor-ref name="defaultStack"/>   
+            <!-- 保存路径savePath依赖注入 -->         
+            <param name="savePath">/StudentUpload</param>
+            <result name="input"> /StudentUploadFiles.jsp</result> 
+            <result name="success">/StudentUploadFilesSuccess.jsp</result>  
+        </action>
+     
+        <!--teacherdownloadfilesfromstudent.action 教师下载学生作业 -->
+        <action name="teacherdownloadfilesfromstudent" class="teacherDownloadFilesFromStudent">
+        	<result name="success">/TeacherDownloadFilesFromStudent.jsp</result>
+        </action>
+        
+        <!-- courseshowAll.action 显示课程信息配置 -->
+        <action name="courseshowAll" class="courseShowAllAction">
+        	<result name="success">/CourseShow.jsp</result>
+        </action>
+        
+        <!-- locationaddc_noandt_no.action 学生选定课程配置 -->
+        <action name="locationaddc_noandt_no" class="locationAddC_noAndT_noAction">
+        	<result name="success">/CourseChoicesSuccess.jsp</result>
+        </action>
+        
+         <!-- locationaddstudentgrade.action 定位学生成绩 -->
+         <action name="locationaddstudentgrade" class="locationAddStudentGradeAction">
+        		<result name="success" >/LocationStudentGradeByTeacherSuccess.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- locationshowtargetbys_no.action 根据s_no定位目标字段 -->
+         <action name="locationshowtargetbys_no" class="locationShowTargetByS_NoAction">
+        		<result name="success" >/LocationAddStudentGradeByTeacher.jsp</result>	
+      	 </action>
+        
+        <!-- teacherlogin.action 教师登录 type="redirect"-->
+         <action name="teacherlogin" class="teacherLogingAction">
+        	<result name="success" >/TeacherLoginSuccess.jsp</result>
+        	<result name="input">/TeacherLogin.jsp</result>
+        	<result name="error">/TeacherLogin.jsp</result>
+        </action>
+        
+        <!-- teacherfindtargetpassword.action 教师找回密码 -->
+         <action name="teacherfindtargetpassword" class="teacherFindTargetAction">
+        		<result name="success" >/TeacherShowTargetPassword.jsp</result>	
+        		<result name="error" >/TeacherShowTargetPasswordError.jsp</result>	
+      	 </action>
+      	 
+      	  <!-- teacherfindtargetbyt_no.action 教师通过t_no寻找教师对象 -->
+         <action name="teacherfindtargetbyt_no" class="teacherFindTargetByT_NoAction">
+        		<result name="success" >/TeacherUploadHomeWork.jsp</result>	
+      	 </action>
+        
+        <!-- teacheruploadsettinghomework.action 教师上传布置作业文件 -->
+         <action name="teacheruploadsettinghomework" class="teacherUploadSettingHomeWorkAction">
+            <interceptor-ref name="fileUpload"> 
+              
+                <param name="maximumSize">1024*1024</param> 
+            </interceptor-ref> 
+            <interceptor-ref name="defaultStack"/>   
+            <!-- 保存路径savePath依赖注入 -->         
+            <param name="savePath">/TeacherUploadHomeWork</param>
+            <result name="input"> /TeacherUploadHomeWork.jsp</result> 
+            <result name="success">/TeacherUploadHomeWorkSuccess.jsp</result>  
+        </action>
+        
+        <!-- teacheruploadcoursematerial.action 教师上传课程资料文件 -->
+         <action name="teacheruploadcoursematerial" class="teacherUploadCourseMaterialAction">
+            <interceptor-ref name="fileUpload"> 
+              
+                <param name="maximumSize">1024*1024</param> 
+            </interceptor-ref> 
+            <interceptor-ref name="defaultStack"/>   
+            <!-- 保存路径savePath依赖注入 -->         
+            <param name="savePath">/TeacherUploadCourseMaterial</param>
+            <result name="input"> /TeacherUploadCourseMaterial.jsp</result> 
+            <result name="success">/TeacherUploadCourseMaterialSuccess.jsp</result>  
+        </action>
+        
+        <!-- teacherfindtargetinuploadCoursebyt_no.action 教师通过t_no寻找教师对象 -->
+         <action name="teacherfindtargetinuploadCoursebyt_no" class="teacherFindTargetInUploadCourseByT_NoAction">
+        		<result name="success" >/TeacherUploadCourseMaterial.jsp</result>	
+      	 </action>
+      	 
+      	<!-- teacherquerystudentforscorehomework.action 教师通过查询学生字段 -->
+         <action name="teacherquerystudentforscorehomework" class="teacherQueryStudentForScoreHomeWorkActio">
+        		<result name="success" >/TeacherQueryStudentForScoreHomeWorkAction.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- teacherqueryofficenotice.action 教师查看教务处公告 -->
+         <action name="teacherqueryofficenotice" class="teacherQueryOfficeNoticeAction">
+        		<result name="success" >/TeacherQueryOfficeNotice.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officelogin.action 教务处人员登录-->
+         <action name="officelogin" class="officeLoginAction">
+        	<result name="success" >/OfficeLoginSuccess.jsp</result>
+        	<result name="input">/OfficeLogin.jsp</result>
+        	<result name="error">/OfficeLogin.jsp</result>
+        </action>
+      	 
+      	 <!-- officefindtargetpassword.action 教务处找回密码 -->
+         <action name="officefindtargetpassword" class="officeFindTargetPasswordAction">
+        		<result name="success" >/OfficeShowTargetPassword.jsp</result>	
+        		<result name="error" >/OfficeShowTargetPasswordError.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officeregister.action 教务处人员注册 -->
+      	  <action name="officeregister" class="officeRegisterAction">
+        	<result name="input">/OfficeRegister.jsp</result>
+        	<result name="success">/OfficeRegisterSuccess.jsp</result>
+        	<result name="error">/OfficeRegister.jsp</result>
+        </action>	
+      	 
+      	 <!-- officefindobjectbyo_no.action 通过o_no寻找教务处人员对象 -->
+         <action name="officefindobjectbyo_no" class="officeFindObjectByO_NoAction">
+        		<result name="success" >/OfficeRegisterStudent.jsp</result>	
+      	 </action>
+      	 
+      	  <!-- officeregisterstudent.action 学生进行注册 -->
+      	  <action name="officeregisterstudent" class="officeRegisterStudentAction">
+        	<result name="input">/OfficeRegisterStudent.jsp</result>
+        	<result name="success">/OfficeRegisterStudentSuccess.jsp</result>
+        	<result name="error">/OfficeRegisterStudent.jsp</result>
+        </action>	
+        
+        <!-- officefindobjectbyo_nointeacherregister.action 通过o_no寻找教务处人员对象 -->
+         <action name="officefindobjectbyo_nointeacherregister" class="officeFindObjectByO_NoInTeacherRegisterAction">
+        		<result name="success" >/OfficeRegisterTeacher.jsp</result>	
+      	 </action>
+      	 
+      	  <!-- officeregisterteacher.action 教师进行注册 -->
+      	  <action name="officeregisterteacher" class="officeRegisterTeacherAction">
+        	<result name="input">/OfficeRegisterTeacher.jsp</result>
+        	<result name="success">/OfficeRegisterTeacherSuccess.jsp</result>
+        	<result name="error">/OfficeRegisterTeacher.jsp</result>
+        </action>	
+        
+        
+       	<!-- officemanagestudentinshowall.action 显示所有学生对象  -->
+         <action name="officemanagestudentinshowall" class="officeManageStudentInShowAllAction">
+        		<result name="success" >/OfficeManageStudent.jsp</result>	
+      	 </action>
+      	
+      	 <!-- officedeletestudent.action 删除学生对象  -->
+         <action name="officedeletestudent" class="officeDeleteStudentAction">
+        		<result name="success" >/OfficeDeleteStudentSuccess.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officeupdatestudent.action 更新学生对象  -->
+         <action name="officeupdatestudent" class="officeUpdateStudentAction">
+        		<result name="success" >/OfficeUpdateStudentSuccess.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officemanageteachershowall.action 显示所有教师对象  -->
+         <action name="officemanageteachershowall" class="officeManageTeacherShowAllAction">
+        		<result name="success" >/OfficeManageTeacher.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officedeleteteacher.action 删除教师对象  -->
+         <action name="officedeleteteacher" class="officeDeleteTeacherAction">
+        		<result name="success" >/OfficeDeleteTeacherSuccess.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officeupdateteacher.action 更新教师对象  -->
+         <action name="officeupdateteacher" class="officeUpdateTeacherAction">
+        		<result name="success" >/OfficeUpdateTeacherSuccess.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officemanagecourseshowall.action 显示所有课程对象  -->
+         <action name="officemanagecourseshowall" class="officeManageCourseShowAllAction">
+        		<result name="success" >/OfficeManageCourse.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officedeletecourse.action 删除课程对象  -->
+         <action name="officedeletecourse" class="officeDeleteCourseAction">
+        		<result name="success" >/OfficeDeleteCourseSuccess.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officeupdatecourse.action 更新课程对象  -->
+         <action name="officeupdatecourse" class="officeUpdateCourseAction">
+        		<result name="success" >/OfficeUpdateCourseSuccess.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officeaddcourse.action 增加课程对象  -->
+         <action name="officeaddcourse" class="officeAddCourseAction">
+        		<result name="success" >/OfficeAddCourseSuccess.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officedownloadcoursematerialfromteacher.action 教务处下载教师上传的课程资料  -->
+         <action name="officedownloadcoursematerialfromteacher" class="officeDownloadCourseMaterialFromTeacherAction">
+        		<result name="success" >/OfficeDownloadCourseMaterialFromTeacher.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officefindobejectinaddcourse.action 教务处在增加course时寻找office对象  -->
+         <action name="officefindobejectinaddcourse" class="officeFindObejectInAddCourseAction">
+        		<result name="success" >/OfficeAddCourse.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officecountstudentinshowall.action 教务处在增加course时寻找office对象  -->
+         <action name="officecountstudentinshowall" class="officeCountStudentInShowAllAction">
+        		<result name="success" >/OfficeCountStudentInShowAll.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officecountstudentgrade.action 教务处查询学生成绩  -->
+         <action name="officecountstudentgrade" class="officeCountStudentGradeAction">
+        		<result name="success">/OfficeCountStudentGradeResult.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- officefindobejectinaddnotice.action 教务处在添加公告时查找office  -->
+         <action name="officefindobejectinaddnotice" class="officeFindObejectInAddNoticeAction">
+        		<result name="success">/OfficeAddNotice.jsp</result>	
+      	 </action>
+      	 
+      	 <!-- 发布公告模块 -->
+      	 <!-- officeaddnotice.action 教务处发布公告  -->
+         <action name="officeaddnotice" class="officeAddNoticeAction">
+        		<result name="success">/OfficeAddNoticeSuccess.jsp</result>	
+      	 </action>
+    </package> 
+    	
+</struts>

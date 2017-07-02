@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!-- MySQL数据库连接实例 -->
+	<bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver">
+		</property>
+		<property name="url"
+			value="jdbc:mysql://localhost/edusystem">
+		</property>
+		<property name="username" value="root"></property>
+		<property name="password" value="lybcyy."></property>
+	</bean>
+	
+	<!-- 设置sessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="datasource"/>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">false</prop>
+			</props>
+		</property>
+		
+		<property name="mappingResources">
+			<list>
+				<value>Student.hbm.xml</value>
+				<value>Course.hbm.xml</value>
+				<value>Teacher.hbm.xml</value>
+				<value>Location.hbm.xml</value>
+				<value>Office.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 模板类HibernateTemplate，完成持久化操作 -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>	
+	</bean>
+	
+	<!-- 配置DAO组件StudentDAO，注入HibernateTemplate实例 -->
+	<bean id="studentDAO" class="com.edu.daoimpl.StudentDAOImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate"/>
+		</property>
+	</bean>
+	
+	<!-- 配置DAO组件CourseDAO，注入HibernateTemplate实例 -->
+	<bean id="courseDAO" class="com.edu.daoimpl.CourseDAOImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate"/>
+		</property>
+	</bean>
+	
+	<!-- 配置DAO组件LocationDAO，注入HibernateTemplate实例 -->
+	<bean id="locationDAO" class="com.edu.daoimpl.LocationDAOImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate"/>
+		</property>
+	</bean>
+	
+	<!-- 配置DAO组件TeacherDAO，注入HibernateTemplate实例 -->
+	<bean id="teacherDAO" class="com.edu.daoimpl.TeacherDAOImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate"/>
+		</property>
+	</bean>
+	
+	<!-- 配置DAO组件OfficeDAO，注入HibernateTemplate实例 -->
+	<bean id="officeDAO" class="com.edu.daoimpl.OfficeDAOImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate"/>
+		</property>
+	</bean>
+	
+	<!-- 配置业务逻辑组件studentService 注入DAO组件 -->
+	<bean id="studentService" class="com.edu.serviceimpl.StudentServiceImpl">
+		<property name="studentDAO" ref="studentDAO"></property>
+	</bean>
+	
+	<!-- 配置业务逻辑组件courseService 注入DAO组件 -->
+	<bean id="courseService" class="com.edu.serviceimpl.CourseServiceImpl">
+		<property name="courseDAO" ref="courseDAO"></property>
+	</bean>
+	
+	<!-- 配置业务逻辑组件teacherService 注入DAO组件 -->
+	<bean id="teacherService" class="com.edu.serviceimpl.TeacherServiceImpl">
+		<property name="teacherDAO" ref="teacherDAO"></property>
+	</bean>
+	
+	<!-- 配置业务逻辑组件locationService 注入DAO组件 -->
+	<bean id="locationService" class="com.edu.serviceimpl.LocationServiceImpl">
+		<property name="locationDAO" ref="locationDAO"></property>
+	</bean>
+	
+	<!-- 配置业务逻辑组件officeService 注入DAO组件 -->
+	<bean id="officeService" class="com.edu.serviceimpl.OfficeServiceImpl">
+		<property name="officeDAO" ref="officeDAO"></property>
+	</bean>
+	
+	<!-- 创建studentLogingAction实例 -->
+	<bean id="studentLogingAction" class="com.edu.action.StudentLogingAction" scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+	
+	<!-- 创建studentFindTargetAction实例 -->
+	<bean id="studentFindTargetAction" class="com.edu.action.StudentFindTargetAction" scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+	
+	<!-- 创建studentUploadFilesAction实例 -->
+	<bean id="studentUploadFilesAction" class="com.edu.action.StudentUploadFilesAction" scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+	
+	<!-- 创建studentShowAllAction实例 -->
+	<bean id="studentShowAllAction" class="com.edu.action.StudentShowAllAction" scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+		<property name="teacherService" ref="teacherService"></property>
+	</bean>
+	
+	<!-- 创建studentFindObjectByNameAction实例 -->
+	<!--<bean id="studentFindObjectByNameAction" class="com.edu.action.StudentFindObjectByNameAction" scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+	</bean> -->
+	
+	
+	<!-- 创建studentFindTargetByS_no实例 -->
+	<bean id="studentFindTargetByS_no" class="com.edu.action.StudentFindTargetByS_noAction" scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+	
+	<!-- 创建studentDownloadHomeworkFromTeacherAction实例 -->
+	<bean id="studentDownloadHomeworkFromTeacherAction" class="com.edu.action.StudentDownloadHomeworkFromTeacherAction" scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+		<property name="teacherService" ref="teacherService"></property>
+	</bean>
+	
+	<!-- 创建studentQueryGradeByLoctionAction实例 -->
+	<bean id="studentQueryGradeByLoctionAction" class="com.edu.action.StudentQueryGradeByLoctionAction" scope="prototype">
+		<property name="locationService" ref="locationService"></property>
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+	
+	<!-- 创建studentQueryOfficeNoticeAction实例 -->
+	<bean id="studentQueryOfficeNoticeAction" class="com.edu.action.StudentQueryOfficeNoticeAction" scope="prototype">
+		<property name="officeService" ref="officeService"></property>
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+	
+	<!-- 创建teacherDownloadFilesFromStudentAction实例 -->
+	<bean id="teacherDownloadFilesFromStudentAction" class="com.edu.action.TeacherDownloadFilesFromStudent" scope="prototype"></bean>
+	
+	<!-- 创建courseShowAllAction实例 -->
+	<bean id="courseShowAllAction" class="com.edu.action.CourseShowAllAction" scope="prototype">
+		<property name="courseService" ref="courseService"></property>
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+	
+	<!-- 创建teacherQueryStudentForScoreHomeWorkAction实例 -->
+	<bean id="teacherQueryStudentForScoreHomeWorkAction" class="com.edu.action.TeacherUploadSettingHomeWorkAction" scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+	
+	<!-- 创建locationAddC_noAndT_noAction实例 -->
+	<bean id="locationAddC_noAndT_noAction" class="com.edu.action.LocationAddC_noAndT_noAction" scope="prototype">
+		<property name="locationService" ref="locationService"></property>
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+	
+	<!-- 创建locationAddStudentGradeAction实例 -->
+	<bean id="locationAddStudentGradeAction" class="com.edu.action.LocationAddStudentGradeAction" scope="prototype">
+		<property name="locationService" ref="locationService"></property>
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+	
+	<!-- 创建locationShowTargetByS_NoAction实例 -->
+	<bean id="locationShowTargetByS_NoAction" class="com.edu.action.LocationShowTargetByS_NoAction" scope="prototype">
+		<property name="locationService" ref="locationService"></property>
+		<property name="teacherService" ref="teacherService"></property>
+	</bean>
+	
+	<!-- 创建teacherLogingAction实例 -->
+	<bean id="teacherLogingAction" class="com.edu.action.TeacherLoginAction" scope="prototype">
+		<property name="teacherService" ref="teacherService"></property>
+	</bean>
+	
+	
+	<!-- 创建teacherFindTargetAction实例 -->
+	<bean id="teacherFindTargetAction" class="com.edu.action.TeacherFindTargetAction" scope="prototype">
+		<property name="teacherService" ref="teacherService"></property>
+	</bean>
+	
+	<!-- 创建teacherDownloadFilesFromStudentAction实例 -->
+	<bean id="teacherDownloadFilesFromStudent" class="com.edu.action.TeacherDownloadFilesFromStudentAction" scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+		<property name="teacherService" ref="teacherService"></property>
+	</bean>
+	
+	<!-- 创建teacherFindTargetByT_NoAction实例 -->
+	<bean id="teacherFindTargetByT_NoAction" class="com.edu.action.TeacherFindTargetByT_NoAction" scope="prototype">
+		<property name="teacherService" ref="teacherService"></property>
+	</bean>
+	
+	<!-- 创建teacherFindTargetInUploadCourseByT_NoAction实例 -->
+	<bean id="teacherFindTargetInUploadCourseByT_NoAction" class="com.edu.action.TeacherFindTargetInUploadCourseByT_NoAction" scope="prototype">
+		<property name="teacherService" ref="teacherService"></property>
+	</bean>
+	
+	<!-- 创建teacherUploadSettingHomeWorkAction实例 -->
+	<bean id="teacherUploadSettingHomeWorkAction" class="com.edu.action.TeacherUploadSettingHomeWorkAction" scope="prototype">
+		<property name="teacherService" ref="teacherService"></property>
+	</bean>
+	
+	<!-- 创建teacherUploadCourseMaterialAction实例 -->
+	<bean id="teacherUploadCourseMaterialAction" class="com.edu.action.TeacherUploadCourseMaterialAction" scope="prototype">
+		<property name="teacherService" ref="teacherService"></property>
+	</bean>
+	
+	<!-- 创建teacherQueryOfficeNoticeAction实例 -->
+	<bean id="teacherQueryOfficeNoticeAction" class="com.edu.action.TeacherQueryOfficeNoticeAction" scope="prototype">
+		<property name="teacherService" ref="teacherService"></property>
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!-- 创建teacherQueryStudentForScoreHomeWorkActio实例 -->
+	<bean id="teacherQueryStudentForScoreHomeWorkActio" class="com.edu.action.TeacherQueryStudentForScoreHomeWorkAction" scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+		<property name="teacherService" ref="teacherService"></property>
+	</bean>
+	
+	<!-- 创建officeLoginAction实例 -->
+	<bean id="officeLoginAction" class="com.edu.action.OfficeLoginAction" scope="prototype">
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!-- 创建officeFindTargetPasswordAction实例 -->
+	<bean id="officeFindTargetPasswordAction" class="com.edu.action.OfficeFindTargetPasswordAction" scope="prototype">
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!-- 创建officeRegisterAction实例 -->
+	<bean id="officeRegisterAction" class="com.edu.action.OfficeRegisterAction" scope="prototype">
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!-- 创建OfficeFindObjectByO_NoAction实例 -->
+	<bean id="officeFindObjectByO_NoAction" class="com.edu.action.OfficeFindObjectByO_NoAction" scope="prototype">
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!-- 创建OfficeRegisterStudentAction实例 -->
+	<bean id="officeRegisterStudentAction" class="com.edu.action.OfficeRegisterStudentAction" scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+	
+	<!-- 创建OfficeFindObjectByO_NoInTeacherRegisterAction实例 -->
+	<bean id="officeFindObjectByO_NoInTeacherRegisterAction" class="com.edu.action.OfficeFindObjectByO_NoAction" scope="prototype">
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!-- 创建OfficeRegisterTeacherAction实例 -->
+	<bean id="officeRegisterTeacherAction" class="com.edu.action.OfficeRegisterTeacherAction" scope="prototype">
+		<property name="teacherService" ref="teacherService"></property>
+	</bean>
+	
+	
+	<!--  创建officeManageStudentInShowAllAction实例 -->
+	<bean id="officeManageStudentInShowAllAction" class="com.edu.action.OfficeManageStudentInShowAllAction" scope="prototype">
+		<property name="officeService" ref="officeService"></property>
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+	
+	<!--  创建officeDeleteStudentAction实例 -->
+	<bean id="officeDeleteStudentAction" class="com.edu.action.OfficeDeleteStudentAction" scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!--  创建officeUpdateStudentAction实例 -->
+	<bean id="officeUpdateStudentAction" class="com.edu.action.OfficeUpdateStudentAction" scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!--  创建officeManageTeacherShowAllAction实例 -->
+	<bean id="officeManageTeacherShowAllAction" class="com.edu.action.OfficeManageTeacherShowAllAction" scope="prototype">
+		<property name="teacherService" ref="teacherService"></property>
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!--  创建officeDeleteTeacherAction实例 -->
+	<bean id="officeDeleteTeacherAction" class="com.edu.action.OfficeDeleteTeacherAction" scope="prototype">
+		<property name="teacherService" ref="teacherService"></property>
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!--  创建officeUpdateTeacherAction实例 -->
+	<bean id="officeUpdateTeacherAction" class="com.edu.action.OfficeUpdateTeacherAction" scope="prototype">
+		<property name="teacherService" ref="teacherService"></property>
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!--  创建officeManageCourseShowAllAction实例 -->
+	<bean id="officeManageCourseShowAllAction" class="com.edu.action.OfficeManageCourseShowAllAction" scope="prototype">
+		<property name="officeService" ref="officeService"></property>
+		<property name="courseService" ref="courseService"></property>
+	</bean>
+	
+	<!--  创建officeDeleteCourseAction实例 -->
+	<bean id="officeDeleteCourseAction" class="com.edu.action.OfficeDeleteCourseAction" scope="prototype">
+		<property name="courseService" ref="courseService"></property>
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!--  创建officeUpdateCourseAction实例 -->
+	<bean id="officeUpdateCourseAction" class="com.edu.action.OfficeUpdateCourseAction" scope="prototype">
+		<property name="courseService" ref="courseService"></property>
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!--  创建officeAddCourseAction实例 -->
+	<bean id="officeAddCourseAction" class="com.edu.action.OfficeAddCourseAction" scope="prototype">
+		<property name="courseService" ref="courseService"></property>
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!--  创建officeDownloadCourseMaterialFromTeacherAction实例 -->
+	<bean id="officeDownloadCourseMaterialFromTeacherAction" class="com.edu.action.OfficeDownloadCourseMaterialFromTeacherAction" scope="prototype">
+		<property name="teacherService" ref="teacherService"></property>
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!--  创建officeFindObejectInAddCourseAction实例 -->
+	<bean id="officeFindObejectInAddCourseAction" class="com.edu.action.OfficeFindObjectByO_NoAction" scope="prototype">
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!--  创建officeCountStudentInShowAllAction实例 -->
+	<bean id="officeCountStudentInShowAllAction" class="com.edu.action.OfficeManageStudentInShowAllAction" scope="prototype">
+		<property name="officeService" ref="officeService"></property>
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+	
+	<!--  创建officeCountStudentGradeAction实例 -->
+	<bean id="officeCountStudentGradeAction" class="com.edu.action.OfficeCountStudentGradeAction" scope="prototype">
+		<property name="officeService" ref="officeService"></property>
+		<property name="studentService" ref="studentService"></property>
+		<property name="teacherService" ref="teacherService"></property>
+		<property name="courseService" ref="courseService"></property>
+		<property name="locationService" ref="locationService"></property>
+	</bean>
+	
+	<!--  创建officeFindObejectInAddNoticeAction实例 -->
+	<bean id="officeFindObejectInAddNoticeAction" class="com.edu.action.OfficeFindObjectByO_NoAction" scope="prototype">
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+	
+	<!--  创建officeAddNoticeAction实例 -->
+	<bean id="officeAddNoticeAction" class="com.edu.action.OfficeAddNoticeAction" scope="prototype">
+		<property name="officeService" ref="officeService"></property>
+	</bean>
+</beans>

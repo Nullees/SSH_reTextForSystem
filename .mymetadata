@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="SSH_reTextForSystem"
+  id="myeclipse.1431671847587"
+  context-root="/SSH_reTextForSystem"
+  j2ee-spec="5.0"
+  archive="SSH_reTextForSystem.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

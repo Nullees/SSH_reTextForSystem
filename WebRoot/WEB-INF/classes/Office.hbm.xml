@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
+<hibernate-mapping>  
+	<!-- 每个class对应一个持久化对象 -->
+	<class name="com.edu.po.Office">
+		<!-- id元素用来定义主键标示，并制定主键生成策略 -->
+		<id name="o_no">
+			<generator class="assigned"></generator>
+		</id>
+		
+		<!-- 定义其他属性 -->
+		<property name="o_name"></property>
+		<property name="o_identity"></property>
+		<property name="o_phone"></property>
+		<property name="o_password"></property>
+		<property name="o_repassword"></property>
+		<property name="o_notice"></property>
+	</class>
+</hibernate-mapping>  

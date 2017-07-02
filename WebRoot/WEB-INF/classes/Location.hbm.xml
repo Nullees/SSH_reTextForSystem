@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
+<hibernate-mapping>  
+	<!-- 每个class对应一个持久化对象 -->
+	<class name="com.edu.po.Location">
+		<!-- id元素用来定义主键标示，并制定主键生成策略 -->
+		<id name="l_no">
+			<generator class="increment"></generator>
+		</id>
+		
+		<!-- 定义其他属性 -->
+		<property name="s_no"></property>
+		<property name="t_no"></property>
+		<property name="c_no"></property>
+		<property name="l_grade"></property>
+		<property name="l_year"></property>
+		<property name="l_term"></property>
+		<property name="l_rebulid"></property>
+	</class>
+</hibernate-mapping>  
